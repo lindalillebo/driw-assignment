@@ -1,4 +1,4 @@
-import products from '../../api/products'
+import products from '@/api/products'
 
 const state = () => ({
     data: []
@@ -7,7 +7,6 @@ const state = () => ({
 const getters = {
     getProductById: (state) => (id) => {
         let result = state.data.find(product => product.id == id);
-        console.log('result', result, state, id);
         return result;
     }
 }

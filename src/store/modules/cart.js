@@ -16,21 +16,34 @@ const getters = {
     },
 
     cartTotalPrice: (state, getters) => {
-        return getters.cartProducts.reduce((total, product) => {
-            let subtotal = (total + product.price * product.quantity)
-            // check number of 500kr purchases
-            let extraDiscount = Math.floor(subtotal / 500) * 2
-            // check discount does not exceed 10%
-            if(extraDiscount > 10)
-                extraDiscount = 10
-            // add discount
-            subtotal = subtotal - ((subtotal / 100) * extraDiscount)
-            // add tax
-            subtotal = subtotal + ((subtotal / 100) * 12)
+        let subtotal = getters.cartProducts.reduce((total, product) => {
+            return total + product.price * product.quantity
+        }, 0)
 
-            return subtotal
+        // check number of 500kr purchases
+        let extraDiscount = Math.floor(subtotal / 500) * 2
+        // check discount does not exceed 10%
+        if (extraDiscount > 10)
+            extraDiscount = 10
+        // add discount
+        let discount = (subtotal / 100) * extraDiscount
+        // add tax
+        let tax = (subtotal / 100) * 12
+
+        return {
+            subtotal,
+            tax,
+            discount,
+            discountPercentage: extraDiscount,
+            total: subtotal - discount + tax
+        }
+    },
+    cartItemQuantity: (state, getters) => {
+        return getters.cartProducts.reduce((total, product) => {
+            return total + product.quantity
         }, 0)
     }
+
 }
 
 const actions = {
@@ -41,6 +54,7 @@ const actions = {
         } else {
             commit('incrementItemQuantity', cartItem)
         }
+        // To-do - save cart items to local storage
     }
 }
 
@@ -60,6 +74,7 @@ const mutations = {
     setCartItems(state, { items }) {
         state.items = items
     }
+
 }
 
 export default {

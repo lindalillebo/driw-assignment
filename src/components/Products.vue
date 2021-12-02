@@ -1,12 +1,18 @@
 <template>
-  <div class="card" v-for="product in products" :key="product.id">
-    <h3>{{ product.name }}</h3>
-    <img :src="product.image" />
-    <p>{{ product.price }} kr</p>
-    <button @click="addProductToCart(product)">Add to Cart</button>
-    <button class="view-product" @click="$emit('view-product', product)">
-      View Product
-    </button>
+  <div class="container">
+    <div class="card" v-for="product in products" :key="product.id">
+      <div class="product-container">
+        <img :src="product.image" />
+        <p class="product-name">{{ product.name }}</p>
+        <p class="price">{{ product.price }} kr</p>
+        <div class="btn-container">
+          <button class="view-product" @click="viewProduct(product)">
+            View Product
+          </button>
+          <button @click="addProductToCart(product)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,14 +24,23 @@ export default {
   computed: mapState({
     products: (state) => state.products.data,
   }),
-  emits: ["view-product"],
   methods: {
     ...mapActions("cart", ["addProductToCart"]),
-    ...mapActions("products", ["getAllProducts"])
+    ...mapActions("products", ["getAllProducts"]),
+    viewProduct(product) {
+      this.$router.push({ path: `/product/${product.id}` });
+    },
   },
   created() {
-    this.getAllProducts()
-    console.log("message:")
-  }
+    this.getAllProducts();
+  },
 };
 </script>
+
+<style scoped>
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

@@ -1,6 +1,6 @@
 import Faker from 'faker'
 
-const products = [...Array(20).fill()].map((item, index) => {
+const products = [...Array(10).fill()].map((item, index) => {
     return {
         id: index,
         name: Faker.commerce.productName(),
@@ -10,10 +10,8 @@ const products = [...Array(20).fill()].map((item, index) => {
     }
 })
 
+// mock api example using faker
 export default {
-    getProduct(id) {
-        return products.find((product) => product.id === id)
-    },
     getProducts() {
         return products
     }

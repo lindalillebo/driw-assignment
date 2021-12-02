@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
-import cart from './modules/cart'
-import products from './modules/products'
+import cart from '@/store/modules/cart'
+import products from '@/store/modules/products'
 
 export default createStore({
     modules: {

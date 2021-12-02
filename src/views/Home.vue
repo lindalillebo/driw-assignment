@@ -1,23 +1,16 @@
 <template>
   <div class="home">
-    <h2>Products</h2>
-      <Products v-on:view-product="viewProduct($event)"/>
+    <Products />
   </div>
 </template>
 
 <script>
-import Products from '../components/Products.vue'
+import Products from "@/components/Products.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    Products
+    Products,
   },
-  methods: {
-    viewProduct(product) {
-      this.$router.push({ path: `/product/${product.id}` })
-      console.log(product)
-    }
-  }
-}
+};
 </script>

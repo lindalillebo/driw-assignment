@@ -1,15 +1,30 @@
 <template>
-  <div class="cart">
+  <div class="cart container">
     <h2>Your cart</h2>
     <p v-show="!products.length">
       <i>Please add some products to cart.</i>
     </p>
-    <ul>
-      <li v-for="product in products" :key="product.id">
-        {{ product.name }} - {{ product.price }} x {{ product.quantity }}
-      </li>
-    </ul>
-    <p>Total: {{ total }}kr</p>
+    <table class="cart-items">
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+      <tr v-for="product in products" :key="product.id">
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.quantity }}</td>
+      </tr>
+    </table>
+    <div class="price-container">
+      <p class="total">Sub Total: {{ cart.subtotal?.toFixed(2) }} kr</p>
+      <p class="total">
+        Discounts ({{ cart.discountPercentage }}%):
+        {{ cart.discount?.toFixed(2) }} kr
+      </p>
+      <p class="total">Tax (12%): {{ cart.tax?.toFixed(2) }} kr</p>
+      <b class="total">Total: {{ cart.total?.toFixed(2) }} kr</b>
+    </div>
   </div>
 </template>
 
@@ -22,8 +37,8 @@ export default {
   computed: {
     ...mapGetters("cart", {
       products: "cartProducts",
-      total: "cartTotalPrice",
+      cart: "cartTotalPrice",
     }),
   },
 };
-</script>
+</script> 

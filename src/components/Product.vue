@@ -1,11 +1,13 @@
 <template>
-  <div class="product section">
+  <div class="product">
     <div class="container">
-      <h3>{{ product.name }}</h3>
       <img :src="product.image" />
-      <p>{{ product.price }} kr</p>
+      <h3>{{ product.name }}</h3>
+      <p class="price">{{ product.price }} kr</p>
       <p>{{ product.description }}</p>
-      <button @click="addProductToCart(product)">Add to Cart</button>
+      <button @click="addProductToCart(product)">
+        <i class="fas fa-shopping-cart"></i> Add to Cart
+      </button>
     </div>
   </div>
 </template>
@@ -21,29 +23,28 @@ export default {
     },
   },
   computed: {
-    ...mapGetters('products', ["getProductById"])
-  },
-  created() {
-    this.product = this.getProductById(this.id)
+    ...mapGetters("products", ["getProductById"]),
   },
   methods: {
-    ...mapActions("cart", ["addProductToCart"])
+    ...mapActions("cart", ["addProductToCart"]),
+  },
+  created() {
+    this.product = this.getProductById(this.id);
   },
 };
 </script>
 
-<style>
-/* h3 {
-  margin: 40px 0 0;
+
+<style scoped>
+button {
+  display: block;
+  float: right;
+  margin: 0;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+@media (min-width: 750px) {
+  .container {
+    width: 70%;
+    margin-top: 20px;
+  }
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-} */
 </style>
-
-
